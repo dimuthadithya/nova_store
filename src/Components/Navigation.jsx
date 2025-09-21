@@ -149,7 +149,7 @@ function Navigation() {
                 {[
                   { name: 'Home', id: 'home' },
                   { name: 'Featured', id: 'featured-collections' },
-                  { name: 'New Arrivals', id: 'new-arrivals' },
+                  { name: 'New', id: 'new-arrivals' },
                   { name: 'Categories', id: 'popular-categories' },
                   { name: 'Brands', id: 'our-brands' }
                 ].map((item, i) => (
