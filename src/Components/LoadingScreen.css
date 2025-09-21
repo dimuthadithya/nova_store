@@ -82,6 +82,23 @@
   }
 }
 
+.progress-bar-fill {
+  background: linear-gradient(to right, #3B82F6, #6366F1);
+  animation: pulse-bar 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-bar {
+  0% {
+    background: linear-gradient(to right, #2563EB, #3B82F6);
+  }
+  50% {
+    background: linear-gradient(to right, #3B82F6, #60A5FA);
+  }
+  100% {
+    background: linear-gradient(to right, #2563EB, #3B82F6);
+  }
+}
+
 /* Add a subtle shimmer effect to the N */
 @keyframes shimmer {
   0% {

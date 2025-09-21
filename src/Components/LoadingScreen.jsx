@@ -180,9 +180,11 @@ const LoadingScreen = ({ onLoadingComplete }) => {
             </div>
             <div className='w-44 h-1.5 bg-gray-700 rounded-full overflow-hidden'>
               <motion.div
-                className='h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full'
+                className='h-full progress-bar-fill rounded-full'
                 style={{ width: `${progress}%` }}
                 initial={{ width: 0 }}
+                animate={{ width: `${progress}%` }}
+                transition={{ type: 'tween', ease: 'easeOut' }}
               />
             </div>
             <div className='text-gray-400 text-sm mt-2'>{progress}%</div>
