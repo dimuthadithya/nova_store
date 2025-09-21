@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Star, 
-  ShoppingCart, 
-  Heart, 
-  Truck, 
-  Clock, 
-  Shield, 
-  ChevronRight 
+import {
+  Star,
+  ShoppingCart,
+  Heart,
+  Truck,
+  Clock,
+  Shield,
+  ChevronRight
 } from 'lucide-react';
 
 function Card2() {
@@ -46,7 +46,7 @@ function Card2() {
               Save 26%
             </motion.span>
           </motion.div>
-          
+
           {/* Wishlist Button */}
           <motion.button
             className='absolute top-2 right-2 z-10 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-md'
@@ -58,13 +58,16 @@ function Card2() {
               damping: 15,
               delay: 0.3
             }}
-            whileHover={{ 
-              scale: 1.1, 
-              backgroundColor: 'rgba(255, 255, 255, 0.95)' 
+            whileHover={{
+              scale: 1.1,
+              backgroundColor: 'rgba(255, 255, 255, 0.95)'
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <Heart size={16} className="text-gray-600 hover:text-red-500 transition-colors duration-200" />
+            <Heart
+              size={16}
+              className='text-gray-600 hover:text-red-500 transition-colors duration-200'
+            />
           </motion.button>
 
           {/* Product Image - Full Width */}
@@ -95,24 +98,26 @@ function Card2() {
           >
             Anker Soundcore R50i True Wireless Earbuds
           </motion.h3>
-          
+
           {/* Rating Stars */}
-          <motion.div 
-            className="flex items-center gap-1"
+          <motion.div
+            className='flex items-center gap-1'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <div className="flex">
+            <div className='flex'>
               {[...Array(5)].map((_, i) => (
-                <Star 
-                  key={i} 
-                  size={14} 
-                  className={`${i < 4 ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`} 
+                <Star
+                  key={i}
+                  size={14}
+                  className={`${
+                    i < 4 ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
+                  }`}
                 />
               ))}
             </div>
-            <span className="text-xs text-gray-500">(42 reviews)</span>
+            <span className='text-xs text-gray-500'>(42 reviews)</span>
           </motion.div>
 
           {/* Price Section */}
@@ -121,9 +126,9 @@ function Card2() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
-            whileHover={{ 
+            whileHover={{
               backgroundColor: '#F5F7FF',
-              borderColor: '#E5EDFF' 
+              borderColor: '#E5EDFF'
             }}
           >
             <motion.div className='flex items-center gap-2'>
@@ -153,7 +158,7 @@ function Card2() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0 }}
             >
-              <Clock size={12} className="text-blue-600" />
+              <Clock size={12} className='text-blue-600' />
               <span>or 3 monthly payments of </span>
               <motion.span
                 className='font-medium text-blue-600'
@@ -162,7 +167,7 @@ function Card2() {
                 Rs 1,441
               </motion.span>
             </motion.div>
-            
+
             {/* Shipping Info */}
             <motion.div
               className='flex items-center gap-1.5 mt-2 text-xs text-gray-600'
@@ -170,7 +175,7 @@ function Card2() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
             >
-              <Truck size={12} className="text-green-600" />
+              <Truck size={12} className='text-green-600' />
               <span>Free shipping</span>
             </motion.div>
           </motion.div>
@@ -203,18 +208,18 @@ function Card2() {
                 In stock (23 units)
               </motion.span>
             </motion.div>
-            
+
             {/* Warranty Info */}
-            <motion.div 
-              className="flex items-center text-xs text-gray-600 gap-1.5"
+            <motion.div
+              className='flex items-center text-xs text-gray-600 gap-1.5'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.4 }}
             >
-              <Shield size={12} className="text-blue-600" />
+              <Shield size={12} className='text-blue-600' />
               <span>1 Year Warranty</span>
             </motion.div>
-            
+
             {/* Add to Cart Button - Enhanced */}
             <motion.button
               className='bg-blue-600 mt-2 w-full cursor-pointer text-white text-sm font-medium px-3 py-2 rounded-lg flex items-center justify-center gap-2'
@@ -230,11 +235,11 @@ function Card2() {
               <ShoppingCart size={16} />
               Add to Cart
             </motion.button>
-            
+
             {/* View Details Link */}
-            <motion.a 
-              href="#"
-              className="flex items-center justify-center gap-1 text-xs text-blue-600 hover:text-blue-800 mt-1 font-medium"
+            <motion.a
+              href='#'
+              className='flex items-center justify-center gap-1 text-xs text-blue-600 hover:text-blue-800 mt-1 font-medium'
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.6 }}
