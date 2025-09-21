@@ -1,0 +1,132 @@
+/* LoadingScreen.css */
+.loading-n {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  animation: draw-n 2s ease forwards, pulse 2s ease-in-out infinite 2s;
+  filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3));
+}
+
+@keyframes draw-n {
+  0% {
+    stroke-dashoffset: 240;
+  }
+  60% {
+    stroke-dashoffset: 0;
+    stroke-width: 4;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    stroke-width: 4;
+  }
+}
+
+/* Shine effect for when loading completes */
+.shine-effect {
+  opacity: 0;
+  animation: shine-path 1s ease-out forwards;
+}
+
+@keyframes shine-path {
+  0% {
+    opacity: 0;
+    stroke-width: 4;
+  }
+  10% {
+    opacity: 1;
+    stroke-width: 6;
+  }
+  60% {
+    opacity: 1;
+    stroke-width: 1;
+  }
+  100% {
+    opacity: 0;
+    stroke-width: 0;
+  }
+}
+
+/* Pulsating effect for the loading logo */
+@keyframes pulse {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.7));
+  }
+  100% {
+    filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.3));
+  }
+}
+
+/* Loading text slide up animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Progress bar animation */
+@keyframes progress-fill {
+  from {
+    width: 0%;
+    background: linear-gradient(to right, #2563EB, #3B82F6);
+  }
+  to {
+    width: 100%;
+    background: linear-gradient(to right, #3B82F6, #60A5FA);
+  }
+}
+
+/* Add a subtle shimmer effect to the N */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Apply shimmer to the filling */
+svg rect[clip-path="url(#n-clip)"] {
+  position: relative;
+}
+
+svg rect[clip-path="url(#n-clip)"]:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* Add a final flourish when loading is complete */
+@keyframes complete-flourish {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+body{
+    overflow-x: hidden;
+}
