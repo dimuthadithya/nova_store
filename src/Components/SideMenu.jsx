@@ -156,15 +156,55 @@ function SideMenu() {
           <Section heading='Back in Stock' />
 
           {/* Popular Categories Section */}
-          <div className='px-4 py-12'>
-            <div className='max-w-7xl mx-auto'>
+          <div className='bg-gradient-to-r from-gray-900 to-gray-800 py-12'>
+            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
               <div className='mb-8'>
-                <h2 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
-                  Popular Categories
-                </h2>
-                <p className='text-gray-600 dark:text-gray-400'>
-                  Explore our most popular product categories
-                </p>
+                <div className='relative pb-4 mb-6'>
+                  {/* Background accent element */}
+                  <div className='absolute -left-2 top-1/2 w-1.5 h-12 bg-blue-500 rounded-full transform -translate-y-1/2 opacity-80'></div>
+
+                  <div className='pl-6'>
+                    {/* Main heading with gradient text */}
+                    <h2 className='text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent'>
+                      Popular Categories
+                    </h2>
+
+                    {/* Description */}
+                    <p className='text-gray-400 text-sm md:text-base max-w-2xl'>
+                      Explore our most popular product categories
+                    </p>
+
+                    {/* Decorative element */}
+                    <div className='flex items-center mt-3'>
+                      <div className='w-10 h-0.5 bg-blue-500 rounded'></div>
+                      <div className='w-20 h-0.5 bg-gray-600 ml-1 rounded'></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* View All link */}
+              <div className='flex justify-between items-center mb-6'>
+                <div className='w-full md:w-1/3'></div>
+                <div className='flex items-center group cursor-pointer'>
+                  <span className='text-gray-300 group-hover:text-white text-sm transition-colors duration-300'>
+                    View All Categories
+                  </span>
+                  <svg
+                    className='w-4 h-4 ml-1 text-gray-400 group-hover:text-white transition-colors duration-300 group-hover:translate-x-1'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='M9 5l7 7-7 7'
+                    ></path>
+                  </svg>
+                </div>
               </div>
 
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6'>
@@ -316,21 +356,61 @@ function SideMenu() {
           <Section heading='Best Sellers' />
 
           {/* Our Brands Section */}
-          <div className='px-4 py-16 bg-gray-50'>
-            <div className='max-w-7xl mx-auto'>
-              <div className='text-center mb-12'>
-                <h2 className='text-4xl font-bold text-gray-900 mb-4'>
-                  Our Brands
-                </h2>
-                <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
-                  Discover the latest products from a wide range of electronic
-                  brands
-                </p>
+          <div className='bg-gradient-to-r from-gray-900 to-gray-800 py-16'>
+            <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+              <div className='mb-12'>
+                <div className='relative pb-4 mb-6'>
+                  {/* Background accent element */}
+                  <div className='absolute -left-2 top-1/2 w-1.5 h-12 bg-blue-500 rounded-full transform -translate-y-1/2 opacity-80'></div>
+
+                  <div className='pl-6'>
+                    {/* Main heading with gradient text */}
+                    <h2 className='text-3xl md:text-4xl font-bold mb-2 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent'>
+                      Our Brands
+                    </h2>
+
+                    {/* Description */}
+                    <p className='text-gray-400 text-sm md:text-base max-w-2xl'>
+                      Discover the latest products from a wide range of
+                      electronic brands
+                    </p>
+
+                    {/* Decorative element */}
+                    <div className='flex items-center mt-3'>
+                      <div className='w-10 h-0.5 bg-blue-500 rounded'></div>
+                      <div className='w-20 h-0.5 bg-gray-600 ml-1 rounded'></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* View All link */}
+              <div className='flex justify-between items-center mb-8'>
+                <div className='w-full md:w-1/3'></div>
+                <div className='flex items-center group cursor-pointer'>
+                  <span className='text-gray-300 group-hover:text-white text-sm transition-colors duration-300'>
+                    View All Brands
+                  </span>
+                  <svg
+                    className='w-4 h-4 ml-1 text-gray-400 group-hover:text-white transition-colors duration-300 group-hover:translate-x-1'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth='2'
+                      d='M9 5l7 7-7 7'
+                    ></path>
+                  </svg>
+                </div>
               </div>
 
               <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6'>
                 {/* Apple */}
-                <div className='group bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100 hover:border-gray-200'>
+                <div className='group bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 shadow-md hover:shadow-xl hover:shadow-blue-900/20 transition-all duration-300 cursor-pointer border border-gray-700 hover:border-gray-600'>
                   <div className='flex items-center justify-center h-20'>
                     <svg
                       className='w-12 h-12 text-gray-800 group-hover:text-gray-900 transition-colors'
