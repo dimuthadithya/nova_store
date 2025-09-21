@@ -51,9 +51,7 @@ function Card2() {
               <span className='text-xs text-gray-500 line-through'>
                 Rs 5,699
               </span>
-              <span className='text-lg font-bold text-red-600'>
-                Rs 4,199
-              </span>
+              <span className='text-lg font-bold text-red-600'>Rs 4,199</span>
             </div>
 
             {/* Payment Option - Simplified */}
