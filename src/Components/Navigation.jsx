@@ -16,7 +16,7 @@ function Navigation() {
           animate={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4'>
+          <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl lg:py-8 px-4'>
             <motion.a
               href=''
               className='flex items-center space-x-3 rtl:space-x-reverse'
@@ -30,7 +30,7 @@ function Navigation() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
-                Nova Store
+                NOVA STORE | KEGALLE
               </motion.span>
             </motion.a>
             <motion.div
@@ -41,18 +41,10 @@ function Navigation() {
             >
               <motion.a
                 href='tel:5541251234'
-                className='text-sm text-gray-500 dark:text-white hover:underline'
+                className='text-lg text-gray-500 dark:text-white hover:underline'
                 whileHover={{ scale: 1.1, color: '#3B82F6' }}
               >
-                (555) 412-1234
-              </motion.a>
-              <motion.a
-                href='#'
-                className='text-sm text-blue-600 dark:text-blue-500 hover:underline'
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Login
+                +94 76 208 5231
               </motion.a>
             </motion.div>
           </div>
