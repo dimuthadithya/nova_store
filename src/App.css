@@ -12,3 +12,7 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+.bg-gray-900{
+  background-color: red !important;
+}
