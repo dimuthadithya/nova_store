@@ -1,5 +1,6 @@
 import React from 'react';
 import Slider from './Slider';
+import Section from './Section';
 import {
   Cpu,
   Monitor,
@@ -14,6 +15,7 @@ import {
   // add other icons you need from lucide-react
 } from 'lucide-react';
 import CardRow from './CardRow';
+import CardRow2 from './CardRow2';
 
 function SideMenu() {
   const itemsWithIcons = [
@@ -148,180 +150,16 @@ function SideMenu() {
           <div className='mb-5 mt-4'>
             <CardRow />
           </div>
-          <div className='grid grid-cols-2 gap-4 mb-4'>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
+          <Section heading='Featured Collections' />
+          <Section heading='Latest Products' />
+          <Section heading='New Arrivals' />
+          <Section heading='Back in Stock' />
+          <div className='bg-gray-900 text-white'>
+            <h1 className='text-4xl'>Popular Categories</h1>
           </div>
-          <div className='flex items-center justify-center h-48 mb-4 rounded-sm bg-gray-50 dark:bg-gray-800'>
-            <p className='text-2xl text-gray-400 dark:text-gray-500'>
-              <svg
-                className='w-3.5 h-3.5'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 18 18'
-              >
-                <path
-                  stroke='currentColor'
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  stroke-width='2'
-                  d='M9 1v16M1 9h16'
-                />
-              </svg>
-            </p>
-          </div>
-          <div className='grid grid-cols-2 gap-4'>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
-            <div className='flex items-center justify-center rounded-sm bg-gray-50 h-28 dark:bg-gray-800'>
-              <p className='text-2xl text-gray-400 dark:text-gray-500'>
-                <svg
-                  className='w-3.5 h-3.5'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 18 18'
-                >
-                  <path
-                    stroke='currentColor'
-                    stroke-linecap='round'
-                    stroke-linejoin='round'
-                    stroke-width='2'
-                    d='M9 1v16M1 9h16'
-                  />
-                </svg>
-              </p>
-            </div>
+          <Section heading='Best Sellers' />
+          <div className='bg-gray-900 text-white'>
+            <h1 className='text-4xl'>Our Brands</h1>
           </div>
         </div>
       </div>
