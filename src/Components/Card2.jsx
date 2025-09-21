@@ -30,7 +30,7 @@ function Card2() {
             }}
           >
             <motion.span
-              className='bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm'
+              className='bg-red-500 hidden text-white text-xs font-semibold px-2 py-1 rounded-full shadow-sm'
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -57,7 +57,7 @@ function Card2() {
         >
           {/* Product Title */}
           <motion.h3
-            className='text-sm font-semibold text-gray-900 leading-tight line-clamp-2 hover:text-blue-600'
+            className='cursor-pointer  text-sm font-semibold text-gray-900 leading-tight line-clamp-2 hover:text-blue-600'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -65,58 +65,6 @@ function Card2() {
           >
             Anker Soundcore R50i True Wireless Earbuds
           </motion.h3>
-
-          {/* Rating */}
-          <motion.div
-            className='flex items-center gap-1'
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-          >
-            <motion.div
-              className='flex items-center'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                staggerChildren: 0.1,
-                delayChildren: 0.6
-              }}
-            >
-              {[1, 2, 3, 4, 5].map((star) => (
-                <motion.svg
-                  key={star}
-                  className='w-3 h-3 text-yellow-400 fill-current'
-                  viewBox='0 0 20 20'
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 500,
-                    damping: 15,
-                    delay: star * 0.1
-                  }}
-                >
-                  <path d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' />
-                </motion.svg>
-              ))}
-            </motion.div>
-            <motion.span
-              className='text-xs font-medium text-gray-700'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.1 }}
-            >
-              4.82
-            </motion.span>
-            <motion.span
-              className='ml-1 text-xs text-gray-500'
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-            >
-              • 3 colors
-            </motion.span>
-          </motion.div>
 
           {/* Price Section */}
           <motion.div
@@ -192,7 +140,7 @@ function Card2() {
               </motion.span>
             </motion.div>
             <motion.button
-              className='bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded'
+              className='bg-blue-600 cursor-pointer text-white text-xs font-medium px-3 py-1 rounded'
               whileHover={{
                 backgroundColor: '#1E40AF',
                 scale: 1.05
