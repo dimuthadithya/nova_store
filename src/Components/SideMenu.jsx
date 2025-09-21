@@ -207,22 +207,21 @@ function SideMenu() {
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6'>
                 {/* Apple Products - Large Card */}
                 <div className='md:row-span-2 group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 transition-all duration-500 cursor-pointer'>
-                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/20'></div>
+                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/50 z-10'></div>
                   <div className='relative h-80 md:h-full min-h-[400px] flex flex-col justify-between p-8'>
-                    <div className='flex justify-end'>
-                      <div className='w-48 h-60 relative'>
-                        <img
-                          src='https://images.unsplash.com/photo-1592286000852-c4dfd1ec60bb?w=400&h=600&fit=crop'
-                          alt='iPhone'
-                          className='w-full h-full object-contain group-hover:scale-105 transition-transform duration-500'
-                        />
-                      </div>
+                    <div className='absolute inset-0 w-full h-full overflow-hidden'>
+                      <img
+                        src='https://www.simplytek.lk/cdn/shop/files/Apple_wallpaper.webp?v=1697199661&width=1280'
+                        alt='iPhone'
+                        className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
+                      />
                     </div>
-                    <div className='space-y-2'>
-                      <h3 className='text-3xl font-bold text-gray-900'>
+                    <div className='relative z-10'></div>
+                    <div className='relative z-10 space-y-2 mt-auto bg-white/20 p-4 rounded-lg backdrop-blur-sm'>
+                      <h3 className='text-3xl font-bold text-white drop-shadow-md'>
                         Apple Products
                       </h3>
-                      <div className='flex items-center text-gray-700 group-hover:text-gray-900 transition-colors'>
+                      <div className='flex items-center text-white group-hover:text-white/80 transition-colors'>
                         <span className='text-sm font-medium'>Explore</span>
                         <svg
                           className='w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform'
@@ -244,20 +243,21 @@ function SideMenu() {
 
                 {/* Speakers */}
                 <div className='group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-blue-900 hover:from-gray-800 hover:to-blue-800 transition-all duration-500 cursor-pointer'>
-                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/30'></div>
+                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/50 z-10'></div>
                   <div className='relative h-48 flex flex-col justify-between p-6 text-white'>
-                    <div className='flex justify-end'>
-                      <div className='w-32 h-20 relative'>
-                        <img
-                          src='https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=300&fit=crop'
-                          alt='Speaker'
-                          className='w-full h-full object-contain group-hover:scale-105 transition-transform duration-500'
-                        />
-                      </div>
+                    <div className='absolute inset-0 w-full h-full overflow-hidden'>
+                      <img
+                        src='//www.simplytek.lk/cdn/shop/files/JBL_Speakers.jpg?v=1695033621&width=800'
+                        alt='Speaker'
+                        className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
+                      />
                     </div>
-                    <div className='space-y-1'>
-                      <h3 className='text-xl font-bold'>Speakers</h3>
-                      <div className='flex items-center group-hover:text-blue-200 transition-colors'>
+                    <div className='relative z-10'></div>
+                    <div className='relative z-10 space-y-1 mt-auto bg-black/30 p-3 rounded-lg backdrop-blur-sm'>
+                      <h3 className='text-xl font-bold text-white drop-shadow-md'>
+                        Speakers
+                      </h3>
+                      <div className='flex items-center text-white group-hover:text-blue-200 transition-colors'>
                         <span className='text-sm font-medium'>Explore</span>
                         <svg
                           className='w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform'
@@ -279,20 +279,21 @@ function SideMenu() {
 
                 {/* Cameras */}
                 <div className='group relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 hover:from-gray-700 hover:to-gray-800 transition-all duration-500 cursor-pointer'>
-                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/30'></div>
+                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/50 z-10'></div>
                   <div className='relative h-48 flex flex-col justify-between p-6 text-white'>
-                    <div className='flex justify-end'>
-                      <div className='w-32 h-20 relative'>
-                        <img
-                          src='https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400&h=300&fit=crop'
-                          alt='Camera'
-                          className='w-full h-full object-contain group-hover:scale-105 transition-transform duration-500'
-                        />
-                      </div>
+                    <div className='absolute inset-0 w-full h-full overflow-hidden'>
+                      <img
+                        src='https://www.simplytek.lk/cdn/shop/files/dash-cam-4k-a800-70mai-dash-cameras-sri-lanka-simplytek-4_1cdd7061-2949-41ad-8311-ddf3c649a3b3.jpg?v=1694425573&width=800'
+                        alt='Camera'
+                        className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
+                      />
                     </div>
-                    <div className='space-y-1'>
-                      <h3 className='text-xl font-bold'>Cameras</h3>
-                      <div className='flex items-center group-hover:text-gray-300 transition-colors'>
+                    <div className='relative z-10'></div>
+                    <div className='relative z-10 space-y-1 mt-auto bg-black/30 p-3 rounded-lg backdrop-blur-sm'>
+                      <h3 className='text-xl font-bold text-white drop-shadow-md'>
+                        Cameras
+                      </h3>
+                      <div className='flex items-center text-white group-hover:text-gray-300 transition-colors'>
                         <span className='text-sm font-medium'>Explore</span>
                         <svg
                           className='w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform'
@@ -314,20 +315,21 @@ function SideMenu() {
 
                 {/* Accessories */}
                 <div className='group relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-900 to-gray-900 hover:from-orange-800 hover:to-gray-800 transition-all duration-500 cursor-pointer'>
-                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/30'></div>
+                  <div className='absolute inset-0 bg-gradient-to-br from-transparent to-black/50 z-10'></div>
                   <div className='relative h-48 flex flex-col justify-between p-6 text-white'>
-                    <div className='flex justify-end'>
-                      <div className='w-32 h-20 relative'>
-                        <img
-                          src='https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=300&fit=crop'
-                          alt='Accessories'
-                          className='w-full h-full object-contain group-hover:scale-105 transition-transform duration-500'
-                        />
-                      </div>
+                    <div className='absolute inset-0 w-full h-full overflow-hidden'>
+                      <img
+                        src='https://www.simplytek.lk/cdn/shop/files/Youpin-Lydsto-12V-Portable-Car-Tire-Inflator-Pump-5-5Bar-Air-Compressor-Tyre-Pressure-Detection-Built-Simplytek-LK-1.jpg?v=1696851982&width=800'
+                        alt='Accessories'
+                        className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-500'
+                      />
                     </div>
-                    <div className='space-y-1'>
-                      <h3 className='text-xl font-bold'>Accessories</h3>
-                      <div className='flex items-center group-hover:text-orange-200 transition-colors'>
+                    <div className='relative z-10'></div>
+                    <div className='relative z-10 space-y-1 mt-auto bg-black/30 p-3 rounded-lg backdrop-blur-sm'>
+                      <h3 className='text-xl font-bold text-white drop-shadow-md'>
+                        Accessories
+                      </h3>
+                      <div className='flex items-center text-white group-hover:text-orange-200 transition-colors'>
                         <span className='text-sm font-medium'>Explore</span>
                         <svg
                           className='w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform'
