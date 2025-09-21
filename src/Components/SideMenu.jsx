@@ -147,9 +147,6 @@ function SideMenu() {
           <div className='lg:h-[500px]'>
             <Slider />
           </div>
-          <div className='mb-5 mt-4'>
-            <CardRow />
-          </div>
           <Section heading='Featured Collections' />
           <Section heading='Latest Products' />
           <Section heading='New Arrivals' />
