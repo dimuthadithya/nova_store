@@ -40,7 +40,7 @@ function Card2() {
 
           {/* Product Image - Full Width */}
           <motion.img
-            src='https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=300&fit=crop'
+            src='https://www.simplytek.lk/cdn/shop/files/6_6cd4df53-d36a-4030-9092-247ee6ed035f.jpg?v=1694424266&width=596'
             alt='Anker Soundcore R50i True Wireless Earbuds'
             className='w-full h-full object-cover'
             whileHover={{ scale: 1.1 }}
