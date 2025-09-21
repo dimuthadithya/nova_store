@@ -144,16 +144,27 @@ function SideMenu() {
 
       <div className='sm:ml-64'>
         <div className='border-gray-200 rounded-lg dark:border-gray-700'>
-          <div className='lg:h-[500px]'>
+          <div id='home' className='lg:h-[500px]'>
             <Slider />
           </div>
-          <Section heading='Featured Collections' />
-          <Section heading='Latest Products' />
-          <Section heading='New Arrivals' />
-          <Section heading='Back in Stock' />
+          <div id='featured-collections'>
+            <Section heading='Featured Collections' />
+          </div>
+          <div id='latest-products'>
+            <Section heading='Latest Products' />
+          </div>
+          <div id='new-arrivals'>
+            <Section heading='New Arrivals' />
+          </div>
+          <div id='back-in-stock'>
+            <Section heading='Back in Stock' />
+          </div>
 
           {/* Popular Categories Section */}
-          <div className='bg-gradient-to-r from-gray-900 to-gray-800 py-12'>
+          <div
+            id='popular-categories'
+            className='bg-gradient-to-r from-gray-900 to-gray-800 py-12'
+          >
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
               <div className='mb-8'>
                 <div className='relative pb-4 mb-6'>
@@ -352,10 +363,15 @@ function SideMenu() {
             </div>
           </div>
 
-          <Section heading='Best Sellers' />
+          <div id='best-sellers'>
+            <Section heading='Best Sellers' />
+          </div>
 
           {/* Our Brands Section */}
-          <div className='bg-gradient-to-r from-gray-900 to-gray-800 py-16'>
+          <div
+            id='our-brands'
+            className='bg-gradient-to-r from-gray-900 to-gray-800 py-16'
+          >
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
               <div className='mb-12'>
                 <div className='relative pb-4 mb-6'>

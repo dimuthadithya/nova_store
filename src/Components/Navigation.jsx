@@ -3,6 +3,20 @@ import { motion } from 'framer-motion';
 import { Phone } from 'lucide-react'; // ✅ Correct import
 
 function Navigation() {
+  // Function to handle smooth scrolling
+  const scrollToSection = (e, id) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      // Adding an offset to account for the fixed navigation
+      const offsetTop =
+        element.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
   return (
     <>
       <motion.div
@@ -132,7 +146,13 @@ function Navigation() {
                 animate={{ opacity: 1 }}
                 transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
               >
-                {['Home', 'Company', 'Team', 'Features'].map((item, i) => (
+                {[
+                  { name: 'Home', id: 'home' },
+                  { name: 'Featured', id: 'featured-collections' },
+                  { name: 'New Arrivals', id: 'new-arrivals' },
+                  { name: 'Categories', id: 'popular-categories' },
+                  { name: 'Brands', id: 'our-brands' }
+                ].map((item, i) => (
                   <motion.li
                     key={i}
                     initial={{ opacity: 0, y: 10 }}
@@ -140,12 +160,13 @@ function Navigation() {
                     transition={{ duration: 0.3, delay: i * 0.1 }}
                   >
                     <motion.a
-                      href='#'
+                      href={`#${item.id}`}
                       className='text-gray-900 dark:text-white hover:underline'
                       whileHover={{ scale: 1.1, color: '#3B82F6' }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={(e) => scrollToSection(e, item.id)}
                     >
-                      {item}
+                      {item.name}
                     </motion.a>
                   </motion.li>
                 ))}

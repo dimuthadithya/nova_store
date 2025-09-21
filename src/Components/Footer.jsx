@@ -144,12 +144,9 @@ function Footer() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5 }}
           >
-            © 2023{' '}
-            <motion.a
-              href='https://flowbite.com/'
-              whileHover={{ color: '#3B82F6' }}
-            >
-              Flowbite™
+            © 2025{' '}
+            <motion.a href='#' whileHover={{ color: '#3B82F6' }}>
+              NOVA STORE
             </motion.a>
             . All Rights Reserved.
           </motion.span>
