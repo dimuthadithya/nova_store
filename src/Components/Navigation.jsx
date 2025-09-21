@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Phone } from 'lucide-react'; // ✅ Correct import
 
 function Navigation() {
   return (
@@ -10,6 +11,7 @@ function Navigation() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
+        {/* Top navigation */}
         <motion.nav
           className='bg-white border-gray-200 dark:bg-gray-900'
           initial={{ boxShadow: '0 0 0 rgba(0, 0, 0, 0)' }}
@@ -17,38 +19,105 @@ function Navigation() {
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl lg:py-8 px-4'>
+            {/* Logo / Brand */}
             <motion.a
-              href=''
-              className='flex items-center space-x-3 rtl:space-x-reverse'
-              whileHover={{ scale: 1.05 }}
+              href='#'
+              className='flex items-center space-x-3 rtl:space-x-reverse group relative'
+              whileHover={{ scale: 1.02 }}
               transition={{ type: 'spring', stiffness: 400, damping: 10 }}
             >
-              <img src='' className='h-8' alt='Nova Store Logo' />
-              <motion.span
-                className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
-              >
-                NOVA STORE | KEGALLE
-              </motion.span>
+              {/* Gradient bar accent */}
+              <motion.div
+                className='absolute -left-3 -top-1 w-2.5 h-14 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-md shadow-lg'
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 56, opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
+              />
+
+              <div className='flex flex-col ml-2'>
+                <motion.div
+                  className='flex items-baseline'
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  {/* Animated NOVA */}
+                  <div className='flex'>
+                    {['N', 'O', 'V', 'A'].map((letter, index) => (
+                      <motion.span
+                        key={index}
+                        className='text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-600 to-violet-600 tracking-tight'
+                        style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.1)' }}
+                        initial={{ y: -30, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 + index * 0.1, duration: 0.4 }}
+                        whileHover={{ scale: 1.1, y: -2 }}
+                      >
+                        {letter}
+                      </motion.span>
+                    ))}
+                  </div>
+
+                  {/* STORE */}
+                  <motion.span
+                    className='ml-3 text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100 tracking-wide'
+                    style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.1)' }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6, duration: 0.5 }}
+                  >
+                    STORE
+                  </motion.span>
+                </motion.div>
+
+                {/* Location */}
+                <motion.div
+                  className='text-sm font-medium uppercase tracking-widest text-gray-500 dark:text-gray-400 ml-1 flex items-center gap-1 -mt-1'
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.4 }}
+                >
+                  <span className='h-px w-5 bg-gradient-to-r from-blue-500 to-transparent'></span>
+                  Kegalle, Sri Lanka
+                </motion.div>
+              </div>
             </motion.a>
+
+            {/* Phone / Help */}
             <motion.div
               className='flex items-center space-x-6 rtl:space-x-reverse'
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <motion.a
-                href='tel:5541251234'
-                className='text-lg text-gray-500 dark:text-white hover:underline'
-                whileHover={{ scale: 1.1, color: '#3B82F6' }}
-              >
-                +94 76 208 5231
-              </motion.a>
+              <motion.div className='relative group hidden lg:block'>
+                {/* Help bubble */}
+                <motion.div
+                  className='absolute -top-7 left-1/2 transform -translate-x-1/2 whitespace-nowrap bg-blue-600 text-white text-xs font-medium px-2.5 py-1 rounded-full shadow-lg'
+                  initial={{ opacity: 0, y: 10, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: 0.6, duration: 0.3 }}
+                >
+                  Need Help? Call Us!
+                  <div className='absolute h-2 w-2 bg-blue-600 transform rotate-45 left-1/2 -bottom-1 -translate-x-1/2'></div>
+                </motion.div>
+
+                {/* Phone link */}
+                <motion.a
+                  href='tel:+94762085231'
+                  className='flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 px-4 py-2 rounded-full transition-colors duration-300'
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Phone size={18} className='text-blue-600' />
+                  <span className='font-medium'>+94 76 208 5231</span>
+                </motion.a>
+              </motion.div>
             </motion.div>
           </div>
         </motion.nav>
+
+        {/* Bottom nav */}
         <motion.nav
           className='bg-gray-50 dark:bg-gray-700'
           initial={{ opacity: 0, y: 20 }}
@@ -63,63 +132,23 @@ function Navigation() {
                 animate={{ opacity: 1 }}
                 transition={{ staggerChildren: 0.1, delayChildren: 0.3 }}
               >
-                <motion.li
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.a
-                    href='#'
-                    className='text-gray-900 dark:text-white hover:underline'
-                    aria-current='page'
-                    whileHover={{ scale: 1.1, color: '#3B82F6' }}
-                    whileTap={{ scale: 0.95 }}
+                {['Home', 'Company', 'Team', 'Features'].map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: i * 0.1 }}
                   >
-                    Home
-                  </motion.a>
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                >
-                  <motion.a
-                    href='#'
-                    className='text-gray-900 dark:text-white hover:underline'
-                    whileHover={{ scale: 1.1, color: '#3B82F6' }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Company
-                  </motion.a>
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  <motion.a
-                    href='#'
-                    className='text-gray-900 dark:text-white hover:underline'
-                    whileHover={{ scale: 1.1, color: '#3B82F6' }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Team
-                  </motion.a>
-                </motion.li>
-                <motion.li
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.3 }}
-                >
-                  <motion.a
-                    href='#'
-                    className='text-gray-900 dark:text-white hover:underline'
-                    whileHover={{ scale: 1.1, color: '#3B82F6' }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Features
-                  </motion.a>
-                </motion.li>
+                    <motion.a
+                      href='#'
+                      className='text-gray-900 dark:text-white hover:underline'
+                      whileHover={{ scale: 1.1, color: '#3B82F6' }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      {item}
+                    </motion.a>
+                  </motion.li>
+                ))}
               </motion.ul>
             </div>
           </div>
