@@ -442,13 +442,13 @@ function AdminDashboard() {
       {/* Add Product Modal */}
       {isAddingProduct && (
         <div className='fixed inset-0 z-50 overflow-y-auto'>
-          <div className='flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0'>
-            <div
-              className='fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75'
-              onClick={() => setIsAddingProduct(false)}
-            ></div>
+          <div
+            className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
+            onClick={() => setIsAddingProduct(false)}
+          ></div>
 
-            <div className='inline-block w-full max-w-2xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-2xl'>
+          <div className='flex items-center justify-center min-h-screen px-4 py-6'>
+            <div className='relative inline-block w-full max-w-2xl overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-2xl'>
               <div className='flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700'>
                 <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
                   Add New Product
