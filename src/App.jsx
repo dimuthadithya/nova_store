@@ -5,7 +5,9 @@ import 'flowbite';
 import Home from './Pages/Home';
 import LoadingScreen from './Components/LoadingScreen';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Dashboard from './Pages/Dashboard';
+import Dashboard from './Pages/AdminDashboard';
+import Login from './Pages/Login';
+import AdminDashboard from './Pages/AdminDashboard';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,8 @@ function App() {
               </AnimatePresence>
             }
           />
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard' element={<AdminDashboard />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
       </BrowserRouter>
     </>
