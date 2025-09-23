@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Plus,
   Package,
@@ -15,7 +15,11 @@ import {
   BarChart3,
   Users,
   ShoppingBag,
-  Settings
+  Settings,
+  LogOut,
+  User,
+  Bell,
+  ChevronDown
 } from 'lucide-react';
 
 function AdminDashboard() {
@@ -26,6 +30,33 @@ function AdminDashboard() {
   const [viewMode, setViewMode] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // User information - this would typically come from authentication context
+  const [userInfo] = useState({
+    name: 'John Doe',
+    email: 'john.doe@novastore.com',
+    role: 'Admin',
+    avatar: 'https://via.placeholder.com/40/4F46E5/FFFFFF?text=JD',
+    lastLogin: new Date().toLocaleDateString()
+  });
+
+  // Dropdown states
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowUserDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Mock data for products
   const [products, setProducts] = useState([
@@ -198,6 +229,20 @@ function AdminDashboard() {
     setProducts(products.filter((product) => product.id !== id));
   };
 
+  const handleSignOut = () => {
+    // Here you would typically clear authentication tokens, user data, etc.
+    console.log('Signing out...');
+    // For now, we'll just show an alert
+    if (window.confirm('Are you sure you want to sign out?')) {
+      // Clear any stored auth tokens
+      localStorage.removeItem('authToken');
+      sessionStorage.removeItem('userSession');
+
+      // Redirect to login page or refresh
+      window.location.href = '/login'; // Or use your routing method
+    }
+  };
+
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
       .toLowerCase()
@@ -331,6 +376,18 @@ function AdminDashboard() {
               <Settings className='mr-3 h-5 w-5' />
               Settings
             </button>
+
+            {/* Divider */}
+            <div className='border-t border-gray-200 dark:border-gray-700 my-4'></div>
+
+            {/* Sign Out Button */}
+            <button
+              onClick={handleSignOut}
+              className='w-full flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20'
+            >
+              <LogOut className='mr-3 h-5 w-5' />
+              Sign Out
+            </button>
           </div>
         </nav>
       </div>
@@ -353,6 +410,87 @@ function AdminDashboard() {
                   placeholder='Search...'
                   className='pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
                 />
+              </div>
+
+              {/* Notifications */}
+              <button className='relative p-2 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors'>
+                <Bell className='h-6 w-6' />
+                <span className='absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white dark:ring-gray-800'></span>
+              </button>
+
+              {/* User Dropdown */}
+              <div className='relative' ref={dropdownRef}>
+                <button
+                  onClick={() => setShowUserDropdown(!showUserDropdown)}
+                  className='flex items-center space-x-3 bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg px-4 py-2 transition-colors'
+                >
+                  <img
+                    src={userInfo.avatar}
+                    alt={userInfo.name}
+                    className='h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-800'
+                  />
+                  <div className='hidden md:block text-left'>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>
+                      {userInfo.name}
+                    </p>
+                    <p className='text-xs text-gray-500 dark:text-gray-400'>
+                      {userInfo.role}
+                    </p>
+                  </div>
+                  <ChevronDown className='h-4 w-4 text-gray-400' />
+                </button>
+
+                {/* Dropdown Menu */}
+                {showUserDropdown && (
+                  <div className='absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50'>
+                    {/* User Info Section */}
+                    <div className='px-4 py-3 border-b border-gray-200 dark:border-gray-700'>
+                      <div className='flex items-center space-x-3'>
+                        <img
+                          src={userInfo.avatar}
+                          alt={userInfo.name}
+                          className='h-12 w-12 rounded-full ring-2 ring-blue-500'
+                        />
+                        <div className='flex-1'>
+                          <p className='text-sm font-semibold text-gray-900 dark:text-white'>
+                            {userInfo.name}
+                          </p>
+                          <p className='text-sm text-gray-500 dark:text-gray-400'>
+                            {userInfo.email}
+                          </p>
+                          <div className='flex items-center mt-1'>
+                            <span className='inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
+                              {userInfo.role}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className='mt-3 text-xs text-gray-500 dark:text-gray-400'>
+                        <p>Last login: {userInfo.lastLogin}</p>
+                      </div>
+                    </div>
+
+                    {/* Menu Items */}
+                    <div className='py-2'>
+                      <button className='flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
+                        <User className='h-4 w-4 mr-3' />
+                        Profile Settings
+                      </button>
+                      <button className='flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors'>
+                        <Settings className='h-4 w-4 mr-3' />
+                        Preferences
+                      </button>
+                      <div className='border-t border-gray-200 dark:border-gray-700 my-1'></div>
+                      <button
+                        onClick={handleSignOut}
+                        className='flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors'
+                      >
+                        <LogOut className='h-4 w-4 mr-3' />
+                        Sign Out
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
