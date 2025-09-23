@@ -16,7 +16,7 @@ function App() {
   // Prevent scrolling when loading
   useEffect(() => {
     if (loading) {
-      document.body.style.overflow = 'hidden';
+      // document.body.style.overflow = 'hidden';
     } else {
       // Add a slight delay before showing content for a smoother transition
       const timer = setTimeout(() => {
