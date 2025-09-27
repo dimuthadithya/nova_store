@@ -59,4 +59,55 @@ const getAllCategories = async () => {
   return categories;
 };
 
-export { addPhone, getProductsByCategory, addNewCategory, getAllCategories };
+const deleteProduct = async (id) => {
+  try {
+    await deleteDoc(doc(db, 'products', id));
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+const deleteCategory = async (id) => {
+  try {
+    await deleteDoc(doc(db, 'categories', id));
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+const updateProduct = async (id, updatedData) => {
+  try {
+    const productRef = doc(db, 'products', id);
+    await updateDoc(productRef, updatedData);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+const updateCategory = async (id, updatedData) => {
+  try {
+    const categoryRef = doc(db, 'categories', id);
+    await updateDoc(categoryRef, updatedData);
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+export {
+  addPhone,
+  getProductsByCategory,
+  addNewCategory,
+  getAllCategories,
+  deleteCategory,
+  deleteProduct,
+  updateProduct,
+  updateCategory,
+};

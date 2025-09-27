@@ -21,6 +21,10 @@ import {
   getProductsByCategory,
   addNewCategory,
   getAllCategories,
+  deleteCategory,
+  deleteProduct,
+  updateProduct,
+  updateCategory,
 } from '../firebase_crud.js';
 import ProductCard from '../Components/Admin/ProductCard.jsx';
 import AddProductModal from '../Components/Admin/AddProductModal.jsx';
@@ -38,14 +42,18 @@ function AdminDashboard() {
   const [newCategory, setNewCategory] = useState({ name: '', description: '' });
   const [categories, setCategories] = useState([]);
 
-  const handleAddCategory = (e) => {
+  const handleAddCategory = async (e) => {
     e.preventDefault();
 
     if (!newCategory.name.trim() || !newCategory.description.trim()) return;
 
-    setCategories([...categories, newCategory]);
-    addNewCategory(newCategory);
-    setNewCategory({ name: '', description: '' }); // reset form
+    try {
+      const id = await addNewCategory(newCategory);
+      setCategories([...categories, { id, ...newCategory }]);
+      setNewCategory({ name: '', description: '' });
+    } catch (error) {
+      console.error('Error adding category:', error);
+    }
   };
 
   useEffect(() => {
@@ -129,15 +137,20 @@ function AdminDashboard() {
     status: 'active',
   });
 
-  const handleAddProduct = () => {
+  const handleAddProduct = async () => {
     if (
       newProduct.name &&
       newProduct.category &&
       newProduct.price &&
       newProduct.stock
     ) {
-      addPhone(newProduct);
-      setIsAddingProduct(false);
+      try {
+        const id = await addPhone(newProduct);
+        setProducts([...products, { id, ...newProduct }]);
+        setIsAddingProduct(false);
+      } catch (error) {
+        console.error('Error adding product:', error);
+      }
     }
   };
 
@@ -157,46 +170,58 @@ function AdminDashboard() {
     setIsEditingProduct(true);
   };
 
-  const handleUpdateProduct = () => {
+  const handleUpdateProduct = async () => {
     if (
       editProduct.name &&
       editProduct.category &&
       editProduct.price &&
       editProduct.stock
     ) {
-      const updatedProducts = products.map((product) =>
-        product.id === editProduct.id
-          ? {
-              ...product,
-              name: editProduct.name,
-              category: editProduct.category,
-              price: parseInt(editProduct.price),
-              stock: parseInt(editProduct.stock),
-              description: editProduct.description,
-              specifications: editProduct.specifications,
-              status: editProduct.status,
-            }
-          : product
-      );
-      setProducts(updatedProducts);
-      setEditProduct({
-        id: null,
-        name: '',
-        category: '',
-        price: '',
-        stock: '',
-        description: '',
-        specifications: '',
-        images: [],
-        status: 'active',
-      });
-      setIsEditingProduct(false);
-      setEditingProductId(null);
+      try {
+        await updateProduct(editProduct.id, {
+          name: editProduct.name,
+          category: editProduct.category,
+          price: parseInt(editProduct.price),
+          stock: parseInt(editProduct.stock),
+          description: editProduct.description,
+          specifications: editProduct.specifications,
+          status: editProduct.status,
+        });
+
+        setProducts(
+          products.map((p) =>
+            p.id === editProduct.id ? { ...p, ...editProduct } : p
+          )
+        );
+
+        setIsEditingProduct(false);
+        setEditingProductId(null);
+        setEditProduct({
+          id: null,
+          name: '',
+          category: '',
+          price: '',
+          stock: '',
+          description: '',
+          specifications: '',
+          images: [],
+          status: 'active',
+        });
+      } catch (error) {
+        console.error('Error updating product:', error);
+      }
     }
   };
 
-  const handleDeleteProduct = (id) => {
-    setProducts(products.filter((product) => product.id !== id));
+  const handleDeleteProduct = async (id) => {
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      try {
+        await deleteProduct(id);
+        setProducts(products.filter((p) => p.id !== id));
+      } catch (error) {
+        console.error('Error deleting product:', error);
+      }
+    }
   };
 
   const handleSignOut = () => {
@@ -210,6 +235,17 @@ function AdminDashboard() {
 
       // Redirect to login page or refresh
       window.location.href = '/login'; // Or use your routing method
+    }
+  };
+
+  const handleDeleteCategory = async (id) => {
+    if (window.confirm('Are you sure you want to delete this category?')) {
+      try {
+        await deleteCategory(id);
+        setCategories(categories.filter((c) => c.id !== id));
+      } catch (error) {
+        console.error('Error deleting category:', error);
+      }
     }
   };
 
