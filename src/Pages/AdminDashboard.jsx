@@ -5,15 +5,10 @@ import {
   Edit,
   Trash2,
   Search,
-  Filter,
-  Upload,
-  Save,
-  X,
   Grid,
   List,
   Eye,
   BarChart3,
-  Users,
   ShoppingBag,
   Settings,
   LogOut,
@@ -21,8 +16,15 @@ import {
   Bell,
   ChevronDown,
 } from 'lucide-react';
-import { addPhone, getProductsByCategory } from '../firebase_crud.js';
+import {
+  addPhone,
+  getProductsByCategory,
+  addNewCategory,
+  getAllCategories,
+} from '../firebase_crud.js';
 import ProductCard from '../Components/Admin/ProductCard.jsx';
+import AddProductModal from '../Components/Admin/AddProductModal.jsx';
+import EditProductModal from '../Components/Admin/EditProductModal.jsx';
 
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('products');
@@ -33,6 +35,35 @@ function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [products, setProducts] = useState([]);
+  const [newCategory, setNewCategory] = useState({ name: '', description: '' });
+  const [categories, setCategories] = useState([]);
+
+  const handleAddCategory = (e) => {
+    e.preventDefault();
+
+    if (!newCategory.name.trim() || !newCategory.description.trim()) return;
+
+    setCategories([...categories, newCategory]);
+    addNewCategory(newCategory);
+    setNewCategory({ name: '', description: '' }); // reset form
+  };
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const fetchedCategories = await getAllCategories();
+        // Store full category objects (name + description)
+        setCategories(fetchedCategories);
+
+        // If you just want to debug immediately:
+        console.log('Fetched categories:', fetchedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   // User information - this would typically come from authentication context
   const [userInfo] = useState({
@@ -74,37 +105,6 @@ function AdminDashboard() {
 
     fetchProducts();
   }, []);
-
-  const categories = [
-    'PBA Systems',
-    'APPLE',
-    'ALL in One Systems',
-    'Desktop Workstations',
-    'TELEVISION (TV)',
-    'Console & Handheld Gaming',
-    'Graphics Tablets',
-    'Laptop',
-    'Power Banks, Laptop Bags, Cooler & Monitor Arms',
-    'Processor',
-    'Motherboards',
-    'Memory (RAM)',
-    'Graphics Card',
-    'POWER SUPPLY, UPS & SURGE PROTECTORS',
-    'Cooling & Lighting',
-    'STORAGE & NAS',
-    'CASINGS',
-    'MONITORS',
-    'Speakers, Headsets & Ear-Buds',
-    'Keyboard,Mouse & Gamepad (Controller)',
-    'Printers',
-    'Gaming Chairs',
-    'Cables & Connectors',
-    'External Storage',
-    'Live Streaming & Recording',
-    'Expansion Cards & Networking',
-    'OS & Software',
-    'Projectors',
-  ];
 
   const [newProduct, setNewProduct] = useState({
     name: '',
@@ -310,7 +310,6 @@ function AdminDashboard() {
           </div>
         </nav>
       </div>
-
       {/* Main Content */}
       <div className='ml-64 flex-1'>
         <header className='bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4'>
@@ -480,8 +479,8 @@ function AdminDashboard() {
                   >
                     <option value='all'>All Categories</option>
                     {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
+                      <option key={category.id} value={category.id}>
+                        {category.name}
                       </option>
                     ))}
                   </select>
@@ -535,15 +534,70 @@ function AdminDashboard() {
               <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-4'>
                 Product Categories
               </h3>
+
+              {/* Add New Category Form */}
+              <form
+                onSubmit={handleAddCategory} // 👉 you'll define this function in your component
+                className='mb-6 space-y-4'
+              >
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                    Category Name
+                  </label>
+                  <input
+                    type='text'
+                    value={newCategory.name}
+                    onChange={(e) =>
+                      setNewCategory({ ...newCategory, name: e.target.value })
+                    }
+                    placeholder='Enter category name'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:bg-gray-700 dark:text-white'
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
+                    Description
+                  </label>
+                  <textarea
+                    value={newCategory.description}
+                    onChange={(e) =>
+                      setNewCategory({
+                        ...newCategory,
+                        description: e.target.value,
+                      })
+                    }
+                    placeholder='Enter category description'
+                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm dark:bg-gray-700 dark:text-white'
+                    rows={3}
+                    required
+                  />
+                </div>
+
+                <button
+                  type='submit'
+                  className='bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm'
+                >
+                  Add Category
+                </button>
+              </form>
+
+              {/* Existing Categories List */}
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
                 {categories.map((category, index) => (
                   <div
                     key={index}
                     className='flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg'
                   >
-                    <span className='text-gray-900 dark:text-white'>
-                      {category}
-                    </span>
+                    <div>
+                      <span className='block text-gray-900 dark:text-white font-medium'>
+                        {category.name}
+                      </span>
+                      <span className='text-sm text-gray-600 dark:text-gray-400'>
+                        {category.description}
+                      </span>
+                    </div>
                     <div className='flex gap-2'>
                       <button className='text-blue-600 hover:text-blue-700'>
                         <Edit className='h-4 w-4' />
@@ -571,348 +625,24 @@ function AdminDashboard() {
           )}
         </main>
       </div>
-
       {/* Add Product Modal */}
-      {isAddingProduct && (
-        <div className='fixed inset-0 z-50 overflow-y-auto'>
-          <div
-            className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
-            onClick={() => setIsAddingProduct(false)}
-          ></div>
-
-          <div className='flex items-center justify-center min-h-screen px-4 py-6'>
-            <div className='relative inline-block w-full max-w-2xl overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-2xl'>
-              <div className='flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700'>
-                <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                  Add New Product
-                </h3>
-                <button
-                  onClick={() => setIsAddingProduct(false)}
-                  className='text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'
-                >
-                  <X className='h-6 w-6' />
-                </button>
-              </div>
-
-              <div className='p-6 space-y-4'>
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Product Name *
-                    </label>
-                    <input
-                      type='text'
-                      value={newProduct.name}
-                      onChange={(e) =>
-                        setNewProduct({ ...newProduct, name: e.target.value })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                      placeholder='Enter product name'
-                    />
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Category *
-                    </label>
-                    <select
-                      value={newProduct.category}
-                      onChange={(e) =>
-                        setNewProduct({
-                          ...newProduct,
-                          category: e.target.value,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                    >
-                      <option value=''>Select category</option>
-                      {categories.map((category) => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Price (LKR) *
-                    </label>
-                    <input
-                      type='number'
-                      value={newProduct.price}
-                      onChange={(e) =>
-                        setNewProduct({ ...newProduct, price: e.target.value })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                      placeholder='0'
-                    />
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Stock Quantity *
-                    </label>
-                    <input
-                      type='number'
-                      value={newProduct.stock}
-                      onChange={(e) =>
-                        setNewProduct({ ...newProduct, stock: e.target.value })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                      placeholder='0'
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                    Description
-                  </label>
-                  <textarea
-                    value={newProduct.description}
-                    onChange={(e) =>
-                      setNewProduct({
-                        ...newProduct,
-                        description: e.target.value,
-                      })
-                    }
-                    rows={3}
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                    placeholder='Product description...'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                    Specifications
-                  </label>
-                  <textarea
-                    value={newProduct.specifications}
-                    onChange={(e) =>
-                      setNewProduct({
-                        ...newProduct,
-                        specifications: e.target.value,
-                      })
-                    }
-                    rows={3}
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                    placeholder='Technical specifications...'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                    Product Images
-                  </label>
-                  <div className='border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center'>
-                    <Upload className='h-8 w-8 mx-auto text-gray-400 mb-2' />
-                    <p className='text-sm text-gray-500 dark:text-gray-400'>
-                      Click to upload or drag and drop images here
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className='flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700'>
-                <button
-                  onClick={() => setIsAddingProduct(false)}
-                  className='px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors'
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleAddProduct}
-                  className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2'
-                >
-                  <Save className='h-4 w-4' />
-                  Add Product
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
+      <AddProductModal
+        isAddingProduct={isAddingProduct}
+        setIsAddingProduct={setIsAddingProduct}
+        newProduct={newProduct}
+        setNewProduct={setNewProduct}
+        categories={categories}
+        handleAddProduct={handleAddProduct}
+      />
       {/* Edit Product Modal */}
-      {isEditingProduct && (
-        <div className='fixed inset-0 z-50 overflow-y-auto'>
-          <div
-            className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'
-            onClick={() => setIsEditingProduct(false)}
-          ></div>
-
-          <div className='flex items-center justify-center min-h-screen px-4 py-6'>
-            <div className='relative inline-block w-full max-w-2xl overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-gray-800 shadow-xl rounded-2xl'>
-              <div className='flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700'>
-                <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
-                  Edit Product
-                </h3>
-                <button
-                  onClick={() => setIsEditingProduct(false)}
-                  className='text-gray-400 hover:text-gray-500 dark:hover:text-gray-300'
-                >
-                  <X className='h-6 w-6' />
-                </button>
-              </div>
-
-              <div className='p-6 space-y-4'>
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Product Name *
-                    </label>
-                    <input
-                      type='text'
-                      value={editProduct.name}
-                      onChange={(e) =>
-                        setEditProduct({ ...editProduct, name: e.target.value })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                      placeholder='Enter product name'
-                    />
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Category *
-                    </label>
-                    <select
-                      value={editProduct.category}
-                      onChange={(e) =>
-                        setEditProduct({
-                          ...editProduct,
-                          category: e.target.value,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                    >
-                      <option value=''>Select category</option>
-                      {categories.map((category) => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Price (LKR) *
-                    </label>
-                    <input
-                      type='number'
-                      value={editProduct.price}
-                      onChange={(e) =>
-                        setEditProduct({
-                          ...editProduct,
-                          price: e.target.value,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                      placeholder='0'
-                    />
-                  </div>
-
-                  <div>
-                    <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                      Stock Quantity *
-                    </label>
-                    <input
-                      type='number'
-                      value={editProduct.stock}
-                      onChange={(e) =>
-                        setEditProduct({
-                          ...editProduct,
-                          stock: e.target.value,
-                        })
-                      }
-                      className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                      placeholder='0'
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                    Description
-                  </label>
-                  <textarea
-                    value={editProduct.description}
-                    onChange={(e) =>
-                      setEditProduct({
-                        ...editProduct,
-                        description: e.target.value,
-                      })
-                    }
-                    rows={3}
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                    placeholder='Product description...'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                    Specifications
-                  </label>
-                  <textarea
-                    value={editProduct.specifications}
-                    onChange={(e) =>
-                      setEditProduct({
-                        ...editProduct,
-                        specifications: e.target.value,
-                      })
-                    }
-                    rows={3}
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                    placeholder='Technical specifications...'
-                  />
-                </div>
-
-                <div>
-                  <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>
-                    Status
-                  </label>
-                  <select
-                    value={editProduct.status}
-                    onChange={(e) =>
-                      setEditProduct({
-                        ...editProduct,
-                        status: e.target.value,
-                      })
-                    }
-                    className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
-                  >
-                    <option value='active'>Active</option>
-                    <option value='inactive'>Inactive</option>
-                    <option value='low_stock'>Low Stock</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className='flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700'>
-                <button
-                  onClick={() => setIsEditingProduct(false)}
-                  className='px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors'
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUpdateProduct}
-                  className='px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2'
-                >
-                  <Save className='h-4 w-4' />
-                  Update Product
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <EditProductModal
+        isEditingProduct={isEditingProduct}
+        setIsEditingProduct={setIsEditingProduct}
+        editProduct={editProduct}
+        setEditProduct={setEditProduct}
+        categories={['Mobiles', 'Laptops', 'Accessories']} // you can fetch dynamically
+        handleUpdateProduct={handleUpdateProduct}
+      />
     </div>
   );
 }

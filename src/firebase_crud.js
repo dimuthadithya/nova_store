@@ -38,4 +38,25 @@ const getProductsByCategory = async (category) => {
   return phones;
 };
 
-export { addPhone, getProductsByCategory };
+const addNewCategory = async (category) => {
+  try {
+    const docRef = await addDoc(collection(db, 'categories'), {
+      name: category.name,
+      desciption: category.description,
+    });
+    return docRef.id;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const getAllCategories = async () => {
+  const snapshot = await getDocs(collection(db, 'categories'));
+  const categories = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+  return categories;
+};
+
+export { addPhone, getProductsByCategory, addNewCategory, getAllCategories };
