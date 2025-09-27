@@ -19,8 +19,10 @@ import {
   LogOut,
   User,
   Bell,
-  ChevronDown
+  ChevronDown,
 } from 'lucide-react';
+import { addPhone, getProductsByCategory } from '../firebase_crud.js';
+import ProductCard from '../Components/Admin/ProductCard.jsx';
 
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('products');
@@ -30,6 +32,7 @@ function AdminDashboard() {
   const [viewMode, setViewMode] = useState('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [products, setProducts] = useState([]);
 
   // User information - this would typically come from authentication context
   const [userInfo] = useState({
@@ -37,7 +40,7 @@ function AdminDashboard() {
     email: 'john.doe@novastore.com',
     role: 'Admin',
     avatar: 'https://via.placeholder.com/40/4F46E5/FFFFFF?text=JD',
-    lastLogin: new Date().toLocaleDateString()
+    lastLogin: new Date().toLocaleDateString(),
   });
 
   // Dropdown states
@@ -58,36 +61,19 @@ function AdminDashboard() {
     };
   }, []);
 
-  // Mock data for products
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: 'iPhone 15 Pro',
-      category: 'APPLE',
-      price: 299999,
-      stock: 15,
-      image: 'https://via.placeholder.com/150',
-      status: 'active'
-    },
-    {
-      id: 2,
-      name: 'JBL Charge 5',
-      category: 'Speakers',
-      price: 25000,
-      stock: 8,
-      image: 'https://via.placeholder.com/150',
-      status: 'active'
-    },
-    {
-      id: 3,
-      name: 'Samsung 4K Monitor',
-      category: 'MONITORS',
-      price: 85000,
-      stock: 3,
-      image: 'https://via.placeholder.com/150',
-      status: 'low_stock'
-    }
-  ]);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const allProducts = await getProductsByCategory();
+        setProducts(allProducts);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const categories = [
     'PBA Systems',
@@ -117,7 +103,7 @@ function AdminDashboard() {
     'Live Streaming & Recording',
     'Expansion Cards & Networking',
     'OS & Software',
-    'Projectors'
+    'Projectors',
   ];
 
   const [newProduct, setNewProduct] = useState({
@@ -128,7 +114,7 @@ function AdminDashboard() {
     description: '',
     specifications: '',
     images: [],
-    status: 'active'
+    status: 'active',
   });
 
   const [editProduct, setEditProduct] = useState({
@@ -140,7 +126,7 @@ function AdminDashboard() {
     description: '',
     specifications: '',
     images: [],
-    status: 'active'
+    status: 'active',
   });
 
   const handleAddProduct = () => {
@@ -150,23 +136,7 @@ function AdminDashboard() {
       newProduct.price &&
       newProduct.stock
     ) {
-      const product = {
-        id: products.length + 1,
-        ...newProduct,
-        price: parseInt(newProduct.price),
-        stock: parseInt(newProduct.stock)
-      };
-      setProducts([...products, product]);
-      setNewProduct({
-        name: '',
-        category: '',
-        price: '',
-        stock: '',
-        description: '',
-        specifications: '',
-        images: [],
-        status: 'active'
-      });
+      addPhone(newProduct);
       setIsAddingProduct(false);
     }
   };
@@ -181,7 +151,7 @@ function AdminDashboard() {
       description: product.description || '',
       specifications: product.specifications || '',
       images: product.images || [],
-      status: product.status
+      status: product.status,
     });
     setEditingProductId(product.id);
     setIsEditingProduct(true);
@@ -204,7 +174,7 @@ function AdminDashboard() {
               stock: parseInt(editProduct.stock),
               description: editProduct.description,
               specifications: editProduct.specifications,
-              status: editProduct.status
+              status: editProduct.status,
             }
           : product
       );
@@ -218,7 +188,7 @@ function AdminDashboard() {
         description: '',
         specifications: '',
         images: [],
-        status: 'active'
+        status: 'active',
       });
       setIsEditingProduct(false);
       setEditingProductId(null);
@@ -265,57 +235,6 @@ function AdminDashboard() {
         </div>
         <div className={`p-3 rounded-full ${color}`}>
           <Icon className='h-6 w-6 text-white' />
-        </div>
-      </div>
-    </div>
-  );
-
-  const ProductCard = ({ product }) => (
-    <div className='bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden'>
-      <div className='aspect-w-16 aspect-h-9 bg-gray-100 dark:bg-gray-700'>
-        <img
-          src={product.image}
-          alt={product.name}
-          className='w-full h-48 object-cover'
-        />
-      </div>
-      <div className='p-4'>
-        <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-1'>
-          {product.name}
-        </h3>
-        <p className='text-sm text-gray-600 dark:text-gray-400 mb-2'>
-          {product.category}
-        </p>
-        <div className='flex justify-between items-center mb-3'>
-          <span className='text-lg font-bold text-gray-900 dark:text-white'>
-            LKR {product.price.toLocaleString()}
-          </span>
-          <span
-            className={`px-2 py-1 text-xs font-medium rounded-full ${
-              product.stock > 10
-                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                : product.stock > 0
-                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
-                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-            }`}
-          >
-            Stock: {product.stock}
-          </span>
-        </div>
-        <div className='flex gap-2'>
-          <button
-            onClick={() => handleEditProduct(product)}
-            className='flex-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors'
-          >
-            <Edit className='h-4 w-4 inline mr-1' />
-            Edit
-          </button>
-          <button
-            onClick={() => handleDeleteProduct(product.id)}
-            className='bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors'
-          >
-            <Trash2 className='h-4 w-4' />
-          </button>
         </div>
       </div>
     </div>
@@ -599,7 +518,12 @@ function AdminDashboard() {
                 } gap-6`}
               >
                 {filteredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    handleEditProduct={handleEditProduct}
+                    handleDeleteProduct={handleDeleteProduct}
+                  />
                 ))}
               </div>
             </div>
@@ -696,7 +620,7 @@ function AdminDashboard() {
                       onChange={(e) =>
                         setNewProduct({
                           ...newProduct,
-                          category: e.target.value
+                          category: e.target.value,
                         })
                       }
                       className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
@@ -752,7 +676,7 @@ function AdminDashboard() {
                     onChange={(e) =>
                       setNewProduct({
                         ...newProduct,
-                        description: e.target.value
+                        description: e.target.value,
                       })
                     }
                     rows={3}
@@ -770,7 +694,7 @@ function AdminDashboard() {
                     onChange={(e) =>
                       setNewProduct({
                         ...newProduct,
-                        specifications: e.target.value
+                        specifications: e.target.value,
                       })
                     }
                     rows={3}
@@ -860,7 +784,7 @@ function AdminDashboard() {
                       onChange={(e) =>
                         setEditProduct({
                           ...editProduct,
-                          category: e.target.value
+                          category: e.target.value,
                         })
                       }
                       className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
@@ -886,7 +810,7 @@ function AdminDashboard() {
                       onChange={(e) =>
                         setEditProduct({
                           ...editProduct,
-                          price: e.target.value
+                          price: e.target.value,
                         })
                       }
                       className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
@@ -904,7 +828,7 @@ function AdminDashboard() {
                       onChange={(e) =>
                         setEditProduct({
                           ...editProduct,
-                          stock: e.target.value
+                          stock: e.target.value,
                         })
                       }
                       className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
@@ -922,7 +846,7 @@ function AdminDashboard() {
                     onChange={(e) =>
                       setEditProduct({
                         ...editProduct,
-                        description: e.target.value
+                        description: e.target.value,
                       })
                     }
                     rows={3}
@@ -940,7 +864,7 @@ function AdminDashboard() {
                     onChange={(e) =>
                       setEditProduct({
                         ...editProduct,
-                        specifications: e.target.value
+                        specifications: e.target.value,
                       })
                     }
                     rows={3}
@@ -958,7 +882,7 @@ function AdminDashboard() {
                     onChange={(e) =>
                       setEditProduct({
                         ...editProduct,
-                        status: e.target.value
+                        status: e.target.value,
                       })
                     }
                     className='w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent'
