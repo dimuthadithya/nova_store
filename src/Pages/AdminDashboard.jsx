@@ -29,6 +29,7 @@ import {
 import ProductCard from '../Components/Admin/ProductCard.jsx';
 import AddProductModal from '../Components/Admin/AddProductModal.jsx';
 import EditProductModal from '../Components/Admin/EditProductModal.jsx';
+import EditCategoryModal from '../Components/Admin/EditCategoryModal.jsx';
 
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('products');
@@ -41,6 +42,31 @@ function AdminDashboard() {
   const [products, setProducts] = useState([]);
   const [newCategory, setNewCategory] = useState({ name: '', description: '' });
   const [categories, setCategories] = useState([]);
+  const [isEditingCategory, setIsEditingCategory] = useState(false);
+  const [editCategory, setEditCategory] = useState({
+    id: null,
+    name: '',
+    description: '',
+  });
+
+  const handleUpdateCategory = async () => {
+    if (!editCategory.name.trim() || !editCategory.description.trim()) return;
+
+    // Call your firebase update function
+    const success = await updateCategory(editCategory.id, {
+      name: editCategory.name,
+      description: editCategory.description,
+    });
+
+    if (success) {
+      setCategories(
+        categories.map((cat) =>
+          cat.id === editCategory.id ? editCategory : cat
+        )
+      );
+      setIsEditingCategory(false);
+    }
+  };
 
   const handleAddCategory = async (e) => {
     e.preventDefault();
@@ -72,6 +98,11 @@ function AdminDashboard() {
 
     fetchCategories();
   }, []);
+
+  const handleEditCategory = (category) => {
+    setEditCategory(category);
+    setIsEditingCategory(true);
+  };
 
   // User information - this would typically come from authentication context
   const [userInfo] = useState({
@@ -621,9 +652,9 @@ function AdminDashboard() {
 
               {/* Existing Categories List */}
               <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-                {categories.map((category, index) => (
+                {categories.map((category) => (
                   <div
-                    key={index}
+                    key={category.id} // ✅ use unique ID from Firestore
                     className='flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg'
                   >
                     <div>
@@ -635,15 +666,41 @@ function AdminDashboard() {
                       </span>
                     </div>
                     <div className='flex gap-2'>
-                      <button className='text-blue-600 hover:text-blue-700'>
+                      <button
+                        onClick={() => handleEditCategory(category)}
+                        className='text-blue-600 hover:text-blue-700'
+                      >
                         <Edit className='h-4 w-4' />
                       </button>
-                      <button className='text-red-600 hover:text-red-700'>
+                      <button
+                        onClick={async () => {
+                          const confirmed = window.confirm(
+                            'Are you sure you want to delete this category?'
+                          );
+                          if (!confirmed) return;
+
+                          const success = await deleteCategory(category.id);
+                          if (success) {
+                            setCategories(
+                              categories.filter((c) => c.id !== category.id)
+                            );
+                          }
+                        }}
+                        className='text-red-600 hover:text-red-700'
+                      >
                         <Trash2 className='h-4 w-4' />
                       </button>
                     </div>
                   </div>
                 ))}
+
+                <EditCategoryModal
+                  isEditingCategory={isEditingCategory}
+                  setIsEditingCategory={setIsEditingCategory}
+                  editCategory={editCategory}
+                  setEditCategory={setEditCategory}
+                  handleUpdateCategory={handleUpdateCategory}
+                />
               </div>
             </div>
           )}
